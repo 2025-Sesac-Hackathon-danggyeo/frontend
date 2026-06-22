@@ -1,0 +1,112 @@
+/* ===========================
+   Sign Up Page
+   =========================== */
+
+.signup-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg);
+  padding: var(--spacing-xl);
+}
+
+.signup-card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+}
+
+/* Title */
+.signup-title {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--color-text-dark);
+  margin-bottom: 28px;
+}
+
+/* Form */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.signup-input {
+  width: 100%;
+  height: 52px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 10px;
+  padding: 0 16px;
+  font-size: 15px;
+  background: #FAFBFC;
+  color: var(--color-text-dark);
+  transition: border-color var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.signup-input::placeholder {
+  color: var(--color-text-light);
+}
+
+.signup-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Submit Button */
+.signup-submit {
+  width: 100%;
+  height: 52px;
+  background: var(--color-primary);
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color var(--transition-fast),
+              transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.signup-submit:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.signup-submit:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Terms Text */
+.signup-terms {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-text-light);
+  line-height: 1.6;
+}
+
+.signup-terms-link {
+  color: var(--color-primary);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.signup-terms-link:hover {
+  color: var(--color-primary-hover);
+}

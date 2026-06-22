@@ -1,0 +1,459 @@
+/* ===========================
+   Practice Page Styles
+   =========================== */
+
+.practice-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 60px 32px 48px;
+}
+
+/* Step Title Area */
+.practice-title-area {
+  margin-bottom: 0;
+}
+
+.practice-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.practice-title-left {
+  flex: 1;
+}
+
+.practice-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1A1A2E;
+  line-height: 1.3;
+}
+
+.practice-desc {
+  font-size: 16px;
+  color: #374151;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+.practice-step-badge {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #2563EB;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563EB;
+  font-weight: 600;
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-left: 24px;
+}
+
+/* Content Card */
+.practice-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+  padding: 48px;
+  margin-top: 32px;
+}
+
+/* Navigation Buttons */
+.practice-nav {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.practice-nav-btn {
+  padding: 12px 40px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.practice-nav-prev {
+  border: 1.5px solid #2563EB;
+  color: #2563EB;
+  background: white;
+}
+
+.practice-nav-prev:hover {
+  background: #EBF2FF;
+  transform: translateY(-1px);
+}
+
+.practice-nav-next {
+  background: #2563EB;
+  color: white;
+  border: none;
+}
+
+.practice-nav-next:hover {
+  background: #1D4ED8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+
+/* ===========================
+   StepStart Styles
+   =========================== */
+
+.step-start-title {
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  color: #1A1A2E;
+  margin-bottom: 40px;
+}
+
+.step-start-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.step-start-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.step-start-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #60A5FA, #2563EB);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-start-icon svg {
+  width: 44px;
+  height: 44px;
+  color: white;
+  fill: none;
+  stroke: white;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.step-start-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1A1A2E;
+  margin-top: 20px;
+}
+
+.step-start-card-desc {
+  font-size: 14px;
+  color: #6B7280;
+  text-align: center;
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+
+/* ===========================
+   StepRecord Styles
+   =========================== */
+
+.step-record {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step-record-instruction {
+  color: #2563EB;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.step-record-sentence-box {
+  background: #F3F4F6;
+  border-radius: 12px;
+  padding: 24px 32px;
+  margin: 24px auto;
+  max-width: 600px;
+  text-align: center;
+  width: 100%;
+}
+
+.step-record-sentence {
+  font-size: 17px;
+  font-weight: 500;
+  color: #1A1A2E;
+  line-height: 1.6;
+}
+
+.step-record-actions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 48px;
+  margin-top: 40px;
+}
+
+.step-record-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.step-record-action-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-base);
+  position: relative;
+}
+
+.step-record-action:hover .step-record-action-circle {
+  transform: scale(1.05);
+}
+
+.step-record-action-circle.guide {
+  background: linear-gradient(135deg, #60A5FA, #2563EB);
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+}
+
+.step-record-action-circle.record {
+  background: linear-gradient(135deg, #60A5FA, #6366F1);
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+}
+
+.step-record-action-circle svg {
+  width: 32px;
+  height: 32px;
+  color: white;
+  fill: none;
+  stroke: white;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.step-record-action-label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.step-record-action-label.guide {
+  color: #2563EB;
+}
+
+.step-record-action-label.record {
+  color: #6366F1;
+}
+
+/* Recording pulse animation */
+.step-record-action-circle.recording {
+  animation: none;
+}
+
+.step-record-action-circle.recording::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  border-radius: 50%;
+  border: 3px solid rgba(99, 102, 241, 0.5);
+  animation: pulse-ring 1.5s ease-out infinite;
+}
+
+.step-record-action-circle.recording::after {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  right: -12px;
+  bottom: -12px;
+  border-radius: 50%;
+  border: 2px solid rgba(99, 102, 241, 0.25);
+  animation: pulse-ring 1.5s ease-out 0.4s infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+
+/* ===========================
+   StepComplete Styles
+   =========================== */
+
+.step-complete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.step-complete-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #34D399, #10B981);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.step-complete-icon svg {
+  width: 40px;
+  height: 40px;
+  stroke: white;
+  stroke-width: 3;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.step-complete-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1A1A2E;
+  margin-top: 24px;
+}
+
+.step-complete-desc {
+  font-size: 15px;
+  color: #6B7280;
+  margin-top: 12px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* Success animation */
+@keyframes pop-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Confetti particles */
+.step-complete-confetti {
+  position: relative;
+  width: 200px;
+  height: 120px;
+  margin-top: -20px;
+  pointer-events: none;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  animation: confetti-fall 2s ease-out forwards;
+  opacity: 0;
+}
+
+.confetti-piece:nth-child(1) {
+  background: #2563EB;
+  left: 20%;
+  animation-delay: 0.1s;
+}
+
+.confetti-piece:nth-child(2) {
+  background: #10B981;
+  left: 35%;
+  animation-delay: 0.2s;
+}
+
+.confetti-piece:nth-child(3) {
+  background: #F59E0B;
+  left: 50%;
+  animation-delay: 0.15s;
+  width: 6px;
+  height: 10px;
+}
+
+.confetti-piece:nth-child(4) {
+  background: #EF4444;
+  left: 65%;
+  animation-delay: 0.25s;
+}
+
+.confetti-piece:nth-child(5) {
+  background: #8B5CF6;
+  left: 80%;
+  animation-delay: 0.3s;
+  width: 10px;
+  height: 6px;
+}
+
+.confetti-piece:nth-child(6) {
+  background: #EC4899;
+  left: 10%;
+  animation-delay: 0.35s;
+}
+
+.confetti-piece:nth-child(7) {
+  background: #06B6D4;
+  left: 45%;
+  animation-delay: 0.05s;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.confetti-piece:nth-child(8) {
+  background: #F97316;
+  left: 75%;
+  animation-delay: 0.4s;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-20px) rotate(0deg) scale(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0px) rotate(45deg) scale(1);
+  }
+  100% {
+    transform: translateY(100px) rotate(360deg) scale(0.5);
+    opacity: 0;
+  }
+}
