@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../context/AuthContext';
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, logout } = useAuthContext();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -29,7 +32,7 @@ const Header = () => {
           <Link
             to="/"
             id="header-logo"
-            className="font-black text-2xl text-blue-600 tracking-[-0.5px] font-['Inter',sans-serif] no-underline flex-shrink-0 hover:text-blue-600"
+            className="font-black text-2xl text-blue-600 tracking-[-0.5px] no-underline flex-shrink-0 hover:text-blue-600"
           >
             SFITZ
           </Link>
@@ -57,17 +60,29 @@ const Header = () => {
 
         {/* Right: user info */}
         <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-500 whitespace-nowrap">
-            반갑습니다,{' '}
-            <span className="font-bold text-blue-600">홍길동</span>님!
-          </span>
-          <button
-            type="button"
-            id="header-logout-btn"
-            className="text-[13px] font-medium text-gray-500 bg-[#E8ECF1] border border-gray-200 rounded-full px-4 py-1.5 cursor-pointer transition-all duration-150 whitespace-nowrap hover:bg-gray-200"
-          >
-            로그아웃
-          </button>
+          {user ? (
+            <>
+              <span className="text-sm text-gray-500 whitespace-nowrap">
+                안녕하세요,{' '}
+                <span className="font-bold text-blue-600">{user.username}</span>님!
+              </span>
+              <button
+                type="button"
+                onClick={() => logout().then(() => navigate('/'))}
+                className="text-[13px] font-medium text-gray-500 bg-[#E8ECF1] border border-gray-200 rounded-full px-4 py-1.5 cursor-pointer transition-all duration-150 whitespace-nowrap hover:bg-gray-200"
+              >
+                로그아웃
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              onClick={() => navigate('/login')}
+              className="text-[13px] font-semibold text-white bg-blue-600 rounded-full px-5 py-1.5 cursor-pointer transition-all duration-150 whitespace-nowrap hover:bg-blue-700"
+            >
+              로그인
+            </button>
+          )}
         </div>
       </div>
     </header>

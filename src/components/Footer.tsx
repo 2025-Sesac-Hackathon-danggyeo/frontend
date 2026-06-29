@@ -15,7 +15,7 @@ const teamMembers: TeamMember[] = [
 const Footer = () => (
   <footer id="footer" className="bg-[#F1F3F6] pt-[60px] pb-10">
     <div className="max-w-[960px] mx-auto px-8">
-      <div className="font-black text-[28px] text-[#1A1A2E] tracking-[-0.5px] font-['Inter',sans-serif] mb-8">
+      <div className="font-black text-[28px] text-[#1A1A2E] tracking-[-0.5px] mb-8">
         SFITZ
       </div>
 

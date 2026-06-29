@@ -1,10 +1,12 @@
-import { type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
+import { useAuthContext } from '../context/AuthContext';
 
 function SignUp() {
   const navigate = useNavigate();
-  const { signUp, loading, error } = useAuth();
+  const { signUp } = useAuthContext();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -15,8 +17,12 @@ function SignUp() {
 
     if (password !== confirmPassword) return;
 
-    const ok = await signUp(username, password);
-    if (ok) navigate('/my-script');
+    setLoading(true);
+    setError(null);
+    const err = await signUp(username, password);
+    setLoading(false);
+    if (err) setError(err);
+    else navigate('/');
   };
 
   return (
