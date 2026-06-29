@@ -1,53 +1,65 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import './ScriptDetail.css';
+import { useScript } from '../hooks/useScript';
 
 const ScriptDetail: React.FC = () => {
   const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+  const { script, loading } = useScript(id ? Number(id) : undefined);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 pt-16" />
+        <Footer />
+      </div>
+    );
+  }
 
   return (
-    <div className="page-wrapper">
+    <div className="min-h-screen flex flex-col bg-[#E8ECF1]">
       <Header />
-      <main className="page-content script-detail-page">
-        <div className="container">
-          <div className="script-detail-header">
-            <h1 className="script-detail-title">2025년 신제품 런칭 발표</h1>
-            <div className="script-detail-actions">
-              <button className="btn-pill">가이드 음성 듣기</button>
-              <button className="btn-pill" onClick={() => navigate('/practice')}>
+      <main className="flex-1 pt-16 pb-16">
+        <div className="max-w-[960px] mx-auto px-8 py-[60px]">
+          {/* Header */}
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-[28px] font-bold text-[#1A1A2E]">{script?.title}</h1>
+            <div className="flex gap-2">
+              <button className="bg-gray-200 text-gray-500 px-5 py-2 rounded-full text-sm font-medium transition-all duration-150 hover:bg-gray-300 hover:text-[#1A1A2E]">
+                가이드 음성 듣기
+              </button>
+              <button
+                className="bg-gray-200 text-gray-500 px-5 py-2 rounded-full text-sm font-medium transition-all duration-150 hover:bg-gray-300 hover:text-[#1A1A2E]"
+                onClick={() => navigate('/practice')}
+              >
                 연습 녹음하기
               </button>
             </div>
           </div>
 
-          <div className="script-detail-card">
-            <div className="script-detail-content">
-              <div className="script-detail-left">
-                <div className="slide-block">
-                  <h2 className="slide-title">슬라이드 1</h2>
-                  <p className="slide-text">
-                    안녕하십니까, 2025년 신제품 런칭 발표를 맡은 영업본부 김민수입니다. 바쁘신 와중에도 오늘 이 자리에 참석해주신 여러분께 깊은 감사의 말씀을 드립니다.
-                  </p>
-                  <p className="slide-text">
-                    오늘 발표에서는 저희 회사가 야심 차게 준비한 새로운 라인업의 핵심 가치와 시장 전략에 대해 말씀드리고자 합니다. 이번 신제품은 고객의 니즈를 철저히 분석하고 최신 기술을 접목하여 완성된 결과물입니다.
-                  </p>
-                </div>
-
-                <hr className="slide-divider" />
-
-                <div className="slide-block">
-                  <h2 className="slide-title">슬라이드 2</h2>
-                  <p className="slide-text">
-                    먼저 제품의 주요 특징에 대해 설명드리겠습니다. 가장 큰 변화는 바로 사용자 경험의 혁신입니다. 기존 모델 대비 처리 속도를 30% 향상시켰으며, 직관적인 UI를 도입하여 누구나 쉽게 사용할 수 있도록 설계했습니다.
-                  </p>
-                </div>
+          {/* Content Card: overflow-hidden으로 오른쪽 패널이 카드 끝까지 채워지게 */}
+          <div className="bg-white rounded-3xl shadow-[0_2px_20px_rgba(0,0,0,0.06)] overflow-hidden">
+            <div className="flex h-[560px]">
+              {/* Slides — 왼쪽 50%, 내용이 넘치면 스크롤 */}
+              <div className="flex-1 p-10 flex flex-col gap-8 overflow-y-auto">
+                {script?.slides.map((slide, i) => (
+                  <React.Fragment key={slide.order}>
+                    {i > 0 && <hr className="border-t border-gray-200 my-1" />}
+                    <div className="flex flex-col gap-4">
+                      <h2 className="text-lg font-semibold text-blue-600">{slide.title}</h2>
+                      {slide.text.split('\n\n').map((para, j) => (
+                        <p key={j} className="text-gray-700 leading-[1.6] text-base">{para}</p>
+                      ))}
+                    </div>
+                  </React.Fragment>
+                ))}
               </div>
 
-              <div className="script-detail-right" id="slide-placeholder-panel">
-                {/* Structural placeholder */}
-              </div>
+              {/* Right panel — 오른쪽 50%, 카드 끝까지 채움 */}
+              <div className="flex-1 bg-[#F4F7FB] border-l border-[#DAEAFF]" />
             </div>
           </div>
         </div>

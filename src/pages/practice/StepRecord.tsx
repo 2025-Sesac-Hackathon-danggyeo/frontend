@@ -17,103 +17,82 @@ const StepRecord = ({ stepNumber, sentence, onRecordComplete }: StepRecordProps)
 
   const stopRecording = useCallback(() => {
     setIsRecording(false);
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
+    if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
     onRecordComplete?.();
   }, [onRecordComplete]);
 
-  const startRecording = useCallback(() => {
-    setRecordingTime(0);
-    setIsRecording(true);
-  }, []);
+  const startRecording = useCallback(() => { setRecordingTime(0); setIsRecording(true); }, []);
 
-  const handleRecordClick = () => {
-    if (isRecording) {
-      stopRecording();
-    } else {
-      startRecording();
-    }
-  };
+  const handleRecordClick = () => { isRecording ? stopRecording() : startRecording(); };
 
   useEffect(() => {
     if (isRecording) {
-      intervalRef.current = setInterval(() => {
-        setRecordingTime((prev) => prev + 1);
-      }, 1000);
+      intervalRef.current = setInterval(() => setRecordingTime(t => t + 1), 1000);
     }
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-    };
+    return () => { if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; } };
   }, [isRecording]);
 
-  // Reset when stepNumber changes
   useEffect(() => {
     setIsRecording(false);
     setRecordingTime(0);
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
+    if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
   }, [stepNumber]);
 
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
+  const formatTime = (s: number) => `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
 
   return (
-    <section className="step-record" id={`step-record-${stepNumber}`}>
-      <p className="step-record-instruction">
+    <section className="flex flex-col items-center" id={`step-record-${stepNumber}`}>
+      <p className="text-[18px] font-semibold text-blue-600 text-center">
         {ordinal} 번째 문장을 자연스럽게 읽어주세요.
       </p>
 
-      <div className="step-record-sentence-box">
-        <p className="step-record-sentence">{sentence}</p>
+      <div className="bg-gray-100 rounded-xl px-8 py-6 my-6 max-w-[600px] w-full text-center">
+        <p className="text-[17px] font-medium text-[#1A1A2E] leading-[1.6]">{sentence}</p>
       </div>
 
-      <div className="step-record-actions">
+      <div className="flex items-start justify-center gap-12 mt-10">
         {/* 가이드 음성 듣기 */}
         <button
-          className="step-record-action"
           id={`btn-guide-listen-${stepNumber}`}
           type="button"
+          className="flex flex-col items-center cursor-pointer bg-none border-none p-0 group"
         >
-          <div className="step-record-action-circle guide">
-            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-              {/* Speaker / Sound icon */}
+          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-[0_4px_20px_rgba(37,99,235,0.3)] transition-transform duration-250 group-hover:scale-105">
+            <svg className="w-8 h-8 stroke-white fill-none stroke-2 [stroke-linecap:round] [stroke-linejoin:round]" viewBox="0 0 32 32">
               <path d="M5 12h4l6-6v20l-6-6H5a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1z" />
               <path d="M20 10a6 6 0 0 1 0 12" />
               <path d="M23 6a10 10 0 0 1 0 20" />
             </svg>
           </div>
-          <span className="step-record-action-label guide">가이드 음성 듣기</span>
+          <span className="text-sm font-semibold text-blue-600 mt-3">가이드 음성 듣기</span>
         </button>
 
         {/* 녹음 시작 */}
         <button
-          className="step-record-action"
           id={`btn-record-${stepNumber}`}
           type="button"
           onClick={handleRecordClick}
+          className="flex flex-col items-center cursor-pointer bg-none border-none p-0 group"
         >
-          <div
-            className={`step-record-action-circle record ${isRecording ? 'recording' : ''}`}
-          >
-            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-              {/* Microphone icon */}
+          <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center shadow-[0_4px_20px_rgba(99,102,241,0.3)] transition-transform duration-250 group-hover:scale-105">
+            {/* Pulse rings when recording */}
+            {isRecording && (
+              <>
+                <span className="absolute -inset-[6px] rounded-full border-[3px] border-indigo-500/50 animate-pulse-ring" />
+                <span
+                  className="absolute -inset-3 rounded-full border-2 border-indigo-500/25 animate-pulse-ring"
+                  style={{ animationDelay: '0.4s' }}
+                />
+              </>
+            )}
+            <svg className="w-8 h-8 stroke-white fill-none stroke-2 [stroke-linecap:round] [stroke-linejoin:round]" viewBox="0 0 32 32">
               <rect x="11" y="3" width="10" height="16" rx="5" />
               <path d="M7 17a9 9 0 0 0 18 0" />
               <line x1="16" y1="26" x2="16" y2="30" />
               <line x1="12" y1="30" x2="20" y2="30" />
             </svg>
           </div>
-          <span className="step-record-action-label record">
+          <span className="text-sm font-semibold text-indigo-500 mt-3">
             {isRecording ? formatTime(recordingTime) : '녹음 시작'}
           </span>
         </button>
