@@ -27,7 +27,7 @@ const MyScript = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [voiceProfileDone, setVoiceProfileDone] = useState(
+  const [voiceProfileDone] = useState(
     () => localStorage.getItem(VOICE_PROFILE_KEY) === 'true'
   );
   const [regBannerVisible, setRegBannerVisible] = useState(true);
@@ -69,13 +69,13 @@ const MyScript = () => {
       <Header />
       <main className="flex-1 pt-16 pb-20 bg-[#E8ECF1]">
         <div className="max-w-[1200px] mx-auto px-8">
-          <div className="mt-[60px] mb-8">
+          <div className="mt-[60px] mb-8 animate-fade-in-up">
             <h1 className="text-2xl font-[800] text-[#1A1A2E]">내 발표 대본</h1>
           </div>
 
           {/* 목소리 프로필 배너 */}
           {!voiceProfileDone && regBannerVisible && (
-            <div className="flex items-center justify-between bg-white border border-blue-100 rounded-2xl px-7 py-5 mb-7 shadow-sm">
+            <div className="flex items-center justify-between bg-white border border-blue-100 rounded-2xl px-7 py-5 mb-7 shadow-sm animate-fade-in-down">
               <div className="flex items-center gap-5">
                 <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -111,7 +111,7 @@ const MyScript = () => {
           )}
 
           {voiceProfileDone && (
-            <div className="flex items-center justify-between bg-green-50 border border-green-100 rounded-2xl px-7 py-4 mb-7">
+            <div className="flex items-center justify-between bg-green-50 border border-green-100 rounded-2xl px-7 py-4 mb-7 animate-fade-in-down">
               <div className="flex items-center gap-4">
                 <div className="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
                   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -136,6 +136,7 @@ const MyScript = () => {
             {/* Add New Script Card */}
             <button
               className="h-[280px] rounded-2xl px-6 py-8 flex flex-col items-center justify-center bg-transparent border-2 border-dashed border-slate-300 cursor-pointer transition-all duration-250 hover:bg-white/50 hover:border-gray-400 hover:-translate-y-1"
+              style={{ animation: 'cardIn 0.45s ease-out both' }}
               onClick={() => setIsModalOpen(true)}
             >
               <span className="mb-3">
@@ -147,10 +148,11 @@ const MyScript = () => {
             </button>
 
             {/* Script Cards */}
-            {paginatedScripts.map(script => (
+            {paginatedScripts.map((script, index) => (
               <div
                 key={script.id}
                 className="group relative h-[280px] rounded-2xl px-6 py-8 flex flex-col bg-white border border-gray-200 shadow-sm cursor-pointer transition-all duration-250 text-left hover:shadow-md hover:-translate-y-1"
+                style={{ animation: `cardIn 0.5s ease-out ${(index + 1) * 0.08}s both` }}
                 onClick={() => deletingId !== script.id && navigate(`/my-script/${script.id}`)}
               >
                 {/* 삭제 버튼 */}
@@ -169,13 +171,13 @@ const MyScript = () => {
                 </button>
 
                 <h3 className="text-[17px] font-bold text-[#1A1A2E] mb-4 leading-[1.4] pr-6">{script.title}</h3>
-                <p className="text-sm text-gray-500 leading-[1.6] flex-grow overflow-hidden line-clamp-4">{script.content}</p>
-                <span className="text-[13px] text-gray-400 mt-4">{script.date}</span>
+                <p className="text-sm text-gray-500 leading-[1.6] overflow-hidden line-clamp-4">{script.content}</p>
+                <span className="text-[13px] text-gray-400 mt-auto pt-4">{script.date}</span>
 
                 {/* 삭제 확인 오버레이 */}
                 {deletingId === script.id && (
                   <div
-                    className="absolute inset-0 bg-white/95 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center gap-5 p-6"
+                    className="absolute inset-0 bg-white/95 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center gap-5 p-6 animate-scale-up"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div className="flex flex-col items-center gap-2">

@@ -259,7 +259,7 @@ const ScriptDetail: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-[#E8ECF1]">
       <Header />
       <main className="flex-1 pt-16 pb-16">
-        <div className="max-w-[960px] mx-auto px-8 py-[60px]">
+        <div className="max-w-[960px] mx-auto px-8 py-[60px] animate-fade-in-up">
 
           {/* 뒤로가기 */}
           <button
@@ -346,6 +346,7 @@ const ScriptDetail: React.FC = () => {
 
               {/* 오른쪽: 분석 결과 */}
               <div className="flex-1 bg-[#F4F7FB] border-l border-[#DAEAFF] p-8 flex flex-col overflow-y-auto">
+                <div key={selectedKey} className="flex flex-col flex-1 animate-slide-in-right">
                 {currentFeedback ? (
                   <>
                     <p className="text-[11px] text-gray-400 mb-4 text-right">- 기준 음성과의 비교 분석 결과입니다 -</p>
@@ -400,6 +401,7 @@ const ScriptDetail: React.FC = () => {
                     <p className="text-[13px] text-gray-400 text-center">- 문장을 선택해주세요 -</p>
                   </div>
                 )}
+                </div>
               </div>
             </div>
           </div>
@@ -428,8 +430,8 @@ const ScriptDetail: React.FC = () => {
 
       {/* 녹음 모달 */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-3xl shadow-2xl w-[440px] p-8 flex flex-col items-center gap-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" style={{ animation: 'overlayFadeIn 0.25s ease-out both' }}>
+          <div className="bg-white rounded-3xl shadow-2xl w-[440px] p-8 flex flex-col items-center gap-6 animate-scale-up">
 
             {/* 준비 */}
             {recordingState === 'idle' && (
