@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { useAuthContext } from '../context/AuthContext';
 
 
 const FEATURE_CARDS = [
@@ -42,6 +43,7 @@ const TARGET_ITEMS = [
 
 const Landing = () => {
   const navigate = useNavigate();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     const els = document.querySelectorAll('[data-fade]');
@@ -85,6 +87,14 @@ const Landing = () => {
                 <p>내 말이 너무 빠른지, 발음이 어색한지 알기 어렵습니다.</p>
                 <p>누군가의 피드백이나 의견에 기대기도 어렵고,</p>
                 <p>객관적인 '기준' 없이 연습을 반복하는 건 비효율적입니다.</p>
+              </div>
+              <div className="mt-8 flex justify-end gap-3">
+                <button
+                  onClick={() => navigate(user ? '/practice' : '/login')}
+                  className="px-7 py-3 bg-blue-600 hover:bg-blue-500 text-white text-[15px] font-bold rounded-full transition-all duration-200 shadow-[0_4px_20px_rgba(37,99,235,0.5)] hover:shadow-[0_6px_24px_rgba(37,99,235,0.6)] hover:-translate-y-0.5"
+                >
+                  지금 시작하기 →
+                </button>
               </div>
             </div>
           </div>

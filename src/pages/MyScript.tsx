@@ -20,11 +20,17 @@ function getPageNumbers(current: number, total: number): (number | '...')[] {
   return pages;
 }
 
+const VOICE_PROFILE_KEY = 'sfitz_voice_profile_done';
+
 const MyScript = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [voiceProfileDone, setVoiceProfileDone] = useState(
+    () => localStorage.getItem(VOICE_PROFILE_KEY) === 'true'
+  );
+  const [regBannerVisible, setRegBannerVisible] = useState(true);
   const { scripts, createScript, deleteScript } = useScripts();
 
   const totalPages = Math.max(1, Math.ceil(scripts.length / PER_PAGE));
@@ -66,6 +72,65 @@ const MyScript = () => {
           <div className="mt-[60px] mb-8">
             <h1 className="text-2xl font-[800] text-[#1A1A2E]">내 발표 대본</h1>
           </div>
+
+          {/* 목소리 프로필 배너 */}
+          {!voiceProfileDone && regBannerVisible && (
+            <div className="flex items-center justify-between bg-white border border-blue-100 rounded-2xl px-7 py-5 mb-7 shadow-sm">
+              <div className="flex items-center gap-5">
+                <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                    <line x1="12" y1="19" x2="12" y2="23" />
+                    <line x1="8" y1="23" x2="16" y2="23" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-[15px] font-bold text-[#1A1A2E]">기준 목소리를 먼저 등록해주세요</p>
+                  <p className="text-[13px] text-gray-500 mt-0.5">AI 분석의 기준이 되는 목소리 샘플을 녹음해야 피드백을 받을 수 있어요.</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 flex-shrink-0 ml-6">
+                <button
+                  onClick={() => navigate('/practice')}
+                  className="px-5 py-2.5 bg-blue-600 text-white text-[13px] font-semibold rounded-full hover:bg-blue-700 transition-colors whitespace-nowrap"
+                >
+                  목소리 등록하기
+                </button>
+                <button
+                  onClick={() => setRegBannerVisible(false)}
+                  className="w-7 h-7 flex items-center justify-center text-gray-300 hover:text-gray-500 transition-colors rounded-full hover:bg-gray-100"
+                  aria-label="닫기"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          )}
+
+          {voiceProfileDone && (
+            <div className="flex items-center justify-between bg-green-50 border border-green-100 rounded-2xl px-7 py-4 mb-7">
+              <div className="flex items-center gap-4">
+                <div className="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-[14px] font-bold text-green-800">목소리 프로필이 등록되었습니다.</p>
+                  <p className="text-[12px] text-green-600 mt-0.5">기준 음성이 설정되어 분석이 가능해요.</p>
+                </div>
+              </div>
+              <button
+                onClick={() => navigate('/practice')}
+                className="text-[13px] font-semibold text-green-700 hover:text-green-800 border border-green-200 hover:border-green-300 rounded-full px-4 py-1.5 transition-all whitespace-nowrap"
+              >
+                재녹음
+              </button>
+            </div>
+          )}
 
           <div className="grid grid-cols-4 gap-6 mb-12">
             {/* Add New Script Card */}

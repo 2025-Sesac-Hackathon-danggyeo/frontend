@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { scriptsApi } from '../api/scripts';
-import { getLocalScriptById } from '../store/scripts';
+import { getLocalScriptById, saveLocalScript } from '../store/scripts';
 import type { ScriptDetail } from '../types';
 
 export function useScript(id: number | undefined) {
@@ -16,7 +16,6 @@ export function useScript(id: number | undefined) {
       .getById(id)
       .then(setScript)
       .catch(() => {
-        // API 미연동 시 localStorage 또는 mock 데이터에서 ID로 조회
         const local = getLocalScriptById(id);
         if (local) {
           setScript(local);
@@ -27,5 +26,10 @@ export function useScript(id: number | undefined) {
       .finally(() => setLoading(false));
   }, [id]);
 
-  return { script, loading, error };
+  const updateScript = (updated: ScriptDetail) => {
+    saveLocalScript(updated);
+    setScript(updated);
+  };
+
+  return { script, loading, error, updateScript };
 }

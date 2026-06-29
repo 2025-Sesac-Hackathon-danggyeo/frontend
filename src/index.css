@@ -71,6 +71,18 @@
   50%       { transform: translateY(-10px); }
 }
 
+@keyframes ripple {
+  0%   { transform: scale(1);   opacity: 0.5; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes sparkleFloat {
+  0%,100% { transform: translateY(0) scale(1);   opacity: 0; }
+  20%      { opacity: 0.8; }
+  60%      { transform: translateY(-12px) scale(1.2); opacity: 0.6; }
+  80%      { opacity: 0; }
+}
+
 @keyframes floatChip1 {
   0%, 100% { transform: translateY(0) rotate(-2deg); }
   50%       { transform: translateY(-14px) rotate(2deg); }

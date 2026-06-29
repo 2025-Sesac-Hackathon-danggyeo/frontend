@@ -6,6 +6,7 @@ import Practice from './pages/Practice';
 import MyScript from './pages/MyScript';
 import ScriptDetail from './pages/ScriptDetail';
 import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
 function App() {
@@ -15,9 +16,9 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/practice" element={<Practice />} />
-        <Route path="/my-script" element={<MyScript />} />
-        <Route path="/my-script/:id" element={<ScriptDetail />} />
+        <Route path="/practice" element={<ProtectedRoute><Practice /></ProtectedRoute>} />
+        <Route path="/my-script" element={<ProtectedRoute><MyScript /></ProtectedRoute>} />
+        <Route path="/my-script/:id" element={<ProtectedRoute><ScriptDetail /></ProtectedRoute>} />
       </Routes>
     </AuthProvider>
   );

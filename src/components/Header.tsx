@@ -15,9 +15,20 @@ const Header = () => {
   }, []);
 
   const navLinks = [
-    { to: '/about', label: '우리 소개' },
-    { to: '/practice', label: '연습하기' },
+    { to: '/my-script', label: '연습하기' },
   ];
+
+  const handleServiceIntro = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (location.pathname === '/') {
+      document.getElementById('landing-process')?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/');
+      setTimeout(() => {
+        document.getElementById('landing-process')?.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+    }
+  };
 
   return (
     <header
@@ -38,6 +49,13 @@ const Header = () => {
           </Link>
 
           <nav className="flex items-center gap-7 ml-12" aria-label="주요 네비게이션">
+            <a
+              href="#landing-process"
+              onClick={handleServiceIntro}
+              className="text-[15px] no-underline py-1 relative transition-colors duration-150 text-gray-500 font-normal hover:text-[#1A1A2E] cursor-pointer"
+            >
+              서비스 소개
+            </a>
             {navLinks.map((link) => {
               const isActive = location.pathname === link.to;
               return (
@@ -68,7 +86,7 @@ const Header = () => {
               </span>
               <button
                 type="button"
-                onClick={() => logout().then(() => navigate('/'))}
+                onClick={() => { logout(); navigate('/'); }}
                 className="text-[13px] font-medium text-gray-500 bg-[#E8ECF1] border border-gray-200 rounded-full px-4 py-1.5 cursor-pointer transition-all duration-150 whitespace-nowrap hover:bg-gray-200"
               >
                 로그아웃

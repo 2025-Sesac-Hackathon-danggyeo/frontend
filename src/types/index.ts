@@ -30,11 +30,35 @@ export interface PracticeSession {
   createdAt: string;
 }
 
+export interface WordHighlight {
+  word: string;
+  type: 'above' | 'below';
+}
+
+export interface FeedbackCategoryDetail {
+  commentEmphasis: string;
+  highlights: WordHighlight[];
+  legendAbove: string;
+  legendBelow: string;
+  detail: string;
+}
+
 export interface PracticeFeedback {
   score: number;
+  volumeComment?: string;
+  volumeDetail?: FeedbackCategoryDetail;
   paceComment: string;
+  paceDetail?: FeedbackCategoryDetail;
+  pitchComment?: string;
+  pitchDetail?: FeedbackCategoryDetail;
   clarityComment: string;
+  clarityDetail?: FeedbackCategoryDetail;
   suggestions: string[];
+}
+
+export interface SentencePracticeRequest {
+  scriptId: number;
+  sentenceText: string;
 }
 
 export interface AuthResponse {

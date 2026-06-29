@@ -2,8 +2,8 @@ import { apiClient } from './client';
 import type { PracticeSession } from '../types';
 
 export const practiceApi = {
-  start: (scriptId: number) =>
-    apiClient.post<PracticeSession>('/practice', { scriptId }),
+  start: (scriptId: number, sentenceText: string) =>
+    apiClient.post<PracticeSession>('/practice', { scriptId, sentenceText }),
 
   uploadAudio: (sessionId: number, audioBlob: Blob) => {
     const formData = new FormData();

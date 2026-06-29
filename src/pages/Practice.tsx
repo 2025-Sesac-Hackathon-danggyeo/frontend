@@ -22,12 +22,39 @@ const SENTENCES = [
 
 const Practice = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [micError, setMicError] = useState<string | null>(null);
+  const [checkingMic, setCheckingMic] = useState(false);
   const navigate = useNavigate();
 
   const stepInfo = STEP_DATA[currentStep - 1];
 
-  const handlePrev = () => { if (currentStep > 1) setCurrentStep(s => s - 1); };
-  const handleNext = () => { if (currentStep < 5) setCurrentStep(s => s + 1); else navigate('/my-script'); };
+  const handlePrev = () => {
+    setMicError(null);
+    if (currentStep > 1) setCurrentStep(s => s - 1);
+  };
+
+  const handleNext = async () => {
+    if (currentStep === 1) {
+      setCheckingMic(true);
+      setMicError(null);
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach(t => t.stop());
+        setCurrentStep(s => s + 1);
+      } catch {
+        setMicError('마이크 접근 권한이 필요합니다. 브라우저 주소창의 자물쇠 아이콘을 클릭해 마이크를 허용해주세요.');
+      } finally {
+        setCheckingMic(false);
+      }
+      return;
+    }
+    if (currentStep < 5) {
+      if (currentStep === 4) localStorage.setItem('sfitz_voice_profile_done', 'true');
+      setCurrentStep(s => s + 1);
+    } else {
+      navigate('/my-script');
+    }
+  };
 
   const renderStep = () => {
     switch (currentStep) {
@@ -58,7 +85,7 @@ const Practice = () => {
             </div>
             <div
               id="practice-step-badge"
-              className="w-[50px] h-[50px] border-2 border-blue-600 rounded-full flex items-center justify-center text-blue-600 font-semibold text-sm flex-shrink-0 ml-6"
+              className="bg-blue-100 rounded-full px-4 py-1.5 flex items-center justify-center text-blue-600 font-semibold text-[13px] flex-shrink-0 ml-6"
             >
               {currentStep} / 5
             </div>
@@ -68,6 +95,16 @@ const Practice = () => {
           <div className="bg-white rounded-[20px] shadow-[0_2px_20px_rgba(0,0,0,0.06)] p-12 mt-8">
             {renderStep()}
           </div>
+
+          {/* Mic Error */}
+          {micError && (
+            <div className="mt-6 flex items-start gap-3 bg-red-50 border border-red-200 rounded-xl px-5 py-4">
+              <svg className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+              <p className="text-[14px] text-red-700 leading-[1.6]">{micError}</p>
+            </div>
+          )}
 
           {/* Navigation Buttons */}
           <div className="mt-10 flex justify-between items-center">
@@ -84,10 +121,11 @@ const Practice = () => {
             )}
             <button
               id="btn-practice-next"
-              className="px-10 py-3 rounded-lg bg-blue-600 text-white font-semibold text-base border-none cursor-pointer transition-all duration-250 hover:bg-blue-700 hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(37,99,235,0.3)]"
+              disabled={checkingMic}
+              className="px-10 py-3 rounded-lg bg-blue-600 text-white font-semibold text-base border-none cursor-pointer transition-all duration-250 hover:bg-blue-700 hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(37,99,235,0.3)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
               onClick={handleNext}
             >
-              {currentStep === 5 ? '완료' : '다음'}
+              {checkingMic ? '마이크 확인 중...' : currentStep === 5 ? '완료' : '다음'}
             </button>
           </div>
         </div>

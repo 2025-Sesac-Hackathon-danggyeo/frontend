@@ -5,6 +5,9 @@ interface NewScriptModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (script: { title: string; content: string; slides: Slide[] }) => void;
+  initialTitle?: string;
+  initialSlides?: string[];
+  mode?: 'create' | 'edit';
 }
 
 // 한글 호환 자모 범위(U+3131–U+318E): 완성형이 아닌 낱자 자음·모음
@@ -26,9 +29,9 @@ function validate(title: string, slides: string[]) {
   return { titleErr, slideErrs };
 }
 
-const NewScriptModal: React.FC<NewScriptModalProps> = ({ isOpen, onClose, onSave }) => {
-  const [title, setTitle] = useState('');
-  const [slides, setSlides] = useState<string[]>(['']);
+const NewScriptModal: React.FC<NewScriptModalProps> = ({ isOpen, onClose, onSave, initialTitle = '', initialSlides = [''], mode = 'create' }) => {
+  const [title, setTitle] = useState(initialTitle);
+  const [slides, setSlides] = useState<string[]>(initialSlides.length > 0 ? initialSlides : ['']);
   const [titleError, setTitleError] = useState('');
   const [slideErrors, setSlideErrors] = useState<string[]>(['']);
   const [triedSave, setTriedSave] = useState(false);
@@ -90,7 +93,7 @@ const NewScriptModal: React.FC<NewScriptModalProps> = ({ isOpen, onClose, onSave
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-[1000]">
       <div className="bg-white rounded-[20px] w-[600px] max-w-[90vw] max-h-[90vh] overflow-y-auto p-10 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)]">
-        <h2 className="text-center text-blue-600 text-2xl font-bold mb-8">새 대본 작성</h2>
+        <h2 className="text-center text-blue-600 text-2xl font-bold mb-8">{mode === 'edit' ? '대본 수정' : '새 대본 작성'}</h2>
 
         {/* 제목 */}
         <div>
@@ -174,7 +177,7 @@ const NewScriptModal: React.FC<NewScriptModalProps> = ({ isOpen, onClose, onSave
             onClick={handleSave}
             type="button"
           >
-            대본 저장
+            {mode === 'edit' ? '수정 완료' : '대본 저장'}
           </button>
         </div>
       </div>
