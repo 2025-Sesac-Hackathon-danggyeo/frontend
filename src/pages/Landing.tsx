@@ -22,13 +22,14 @@ const PROCESS_STEPS = [
     step: 'STEP 2',
     title: '발표 대본 저장',
     desc: '발표 대본을 직접 입력하거나 불러올 수 있습니다.\n매번 다시 입력할 필요 없이 한 번만 저장해두면\n언제든지 불러와 바로 연습할 수 있습니다.',
-    img: null,
+    img: '/step2.png',
+    imgContain: true,
   },
   {
     step: 'STEP 3',
     title: '발표 연습',
     desc: '저장된 대본을 기준으로 발표 연습을 시작하세요.\n음정·볼륨·속도·발음이 실시간으로 분석되고,\n연습 이후 한눈에 결과를 확인할 수 있어요.',
-    img: null,
+    img: '/step3.png',
   },
 ];
 
@@ -67,15 +68,14 @@ const Landing = () => {
         {/* Section 1: Hero */}
         <section
           id="landing-hero"
-          className="relative overflow-hidden"
-          style={{ minHeight: '580px' }}
+          className="relative overflow-hidden min-h-[650px]"
         >
           {/* Hero background image */}
           <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/hero-bg.png')" }} />
           {/* Dark overlay */}
           <div className="absolute inset-0 bg-black/55" />
 
-          <div className="relative z-[2] max-w-[1100px] mx-auto px-12 flex items-end justify-end pb-28" style={{ minHeight: '580px' }}>
+          <div className="relative z-[2] max-w-[1100px] mx-auto px-12 flex items-end justify-end pb-28 min-h-[650px]">
             <div className="max-w-[480px] text-right">
               <h1 className="text-[30px] font-extrabold text-white leading-[1.3] mb-6 whitespace-pre-line">
                 {'혼자 하는 발표 연습,\n정말 효과가 있을까요?'}
@@ -93,30 +93,61 @@ const Landing = () => {
         {/* Section 2: Impact Statement */}
         <section
           id="landing-statement"
-          className="bg-[#F0F2F5] py-48 text-center"
+          className="relative bg-[#F0F2F5] py-36 min-h-[500px] flex items-center justify-center text-center overflow-hidden"
         >
-          <h2 className="text-[30px] font-extrabold text-[#1A1A2E] leading-[1.55]">
-            발표 연습엔 '감'이 아니라<br />
-            <span className="text-blue-600">데이터</span>가 필요합니다.
-          </h2>
+          {/* Background glow blobs */}
+          <div className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-blue-200 blur-3xl pointer-events-none" style={{ animation: 'glowPulse 4.5s ease-in-out infinite' }} />
+          <div className="absolute bottom-1/4 right-1/4 w-56 h-56 rounded-full bg-blue-300 blur-3xl pointer-events-none" style={{ animation: 'glowPulse 5.5s ease-in-out 1.2s infinite' }} />
+
+          {/* Floating data chips */}
+          <div className="absolute top-14 left-[8%] bg-white rounded-2xl px-4 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.08)] text-[13px] font-bold text-[#1A1A2E] pointer-events-none" style={{ animation: 'floatChip1 4s ease-in-out infinite' }}>
+            발표 속도&nbsp;<span className="text-blue-600 font-extrabold">145 SPM</span>
+          </div>
+          <div className="absolute top-10 right-[9%] bg-white rounded-2xl px-4 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.08)] text-[13px] font-bold text-[#1A1A2E] pointer-events-none" style={{ animation: 'floatChip2 5s ease-in-out 0.6s infinite' }}>
+            볼륨&nbsp;<span className="text-blue-600 font-extrabold">72 dB</span>
+          </div>
+          <div className="absolute bottom-14 left-[10%] bg-white rounded-2xl px-4 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.08)] text-[13px] font-bold text-[#1A1A2E] pointer-events-none" style={{ animation: 'floatChip3 4.5s ease-in-out 1s infinite' }}>
+            발음 정확도&nbsp;<span className="text-blue-600 font-extrabold">89%</span>
+          </div>
+          <div className="absolute bottom-12 right-[8%] bg-white rounded-2xl px-4 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.08)] text-[13px] font-bold text-[#1A1A2E] pointer-events-none" style={{ animation: 'floatChip1 3.8s ease-in-out 1.8s infinite' }}>
+            목소리 톤&nbsp;<span className="text-blue-600 font-extrabold">안정적</span>
+          </div>
+          <div className="absolute top-1/2 left-[4%] -translate-y-1/2 bg-white rounded-2xl px-4 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.08)] text-[13px] font-bold text-[#1A1A2E] pointer-events-none" style={{ animation: 'floatChip2 5.2s ease-in-out 0.3s infinite' }}>
+            연습 횟수&nbsp;<span className="text-blue-600 font-extrabold">12회</span>
+          </div>
+          <div className="absolute top-1/2 right-[4%] -translate-y-1/2 bg-white rounded-2xl px-4 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.08)] text-[13px] font-bold text-[#1A1A2E] pointer-events-none" style={{ animation: 'floatChip3 4.2s ease-in-out 2s infinite' }}>
+            평균 점수&nbsp;<span className="text-blue-600 font-extrabold">A+</span>
+          </div>
+
+          {/* Main text */}
+          <div className="relative z-10" data-fade="up">
+            <h2 className="text-[30px] font-extrabold text-[#1A1A2E] leading-[1.55]">
+              발표 연습엔 '감'이 아니라<br />
+              <span className="text-blue-600">데이터</span>가 필요합니다.
+            </h2>
+          </div>
         </section>
 
         {/* Section 3: About — "나의 발표" */}
         <section
           id="landing-about"
-          className="bg-[#DCE3ED] flex items-center"
-          style={{ minHeight: '560px' }}
+          className="bg-[#DCE3ED] py-36 flex items-center"
         >
-          <div className="max-w-[1100px] mx-auto px-12 w-full">
-            <h2 className="text-[30px] font-extrabold text-[#1A1A2E] leading-[1.35] mb-5">
-              나의 발표,<br />
-              이제 <span className="text-blue-600">데이터로 교정</span>하세요.
-            </h2>
-            <p className="text-[14px] text-gray-600 leading-[1.9]">
-              속도, 음정, 볼륨, 발음을 분석해주는 AI 발표 피드백 서비스<br />
-              객관적인 수치와 시·청각적 피드백으로, 발표 실력을<br />
-              한 단계 성장시켜보세요.
-            </p>
+          <div className="max-w-[1100px] mx-auto px-12 w-full flex items-center gap-12">
+            <div className="flex-1">
+              <h2 className="text-[30px] font-extrabold text-[#1A1A2E] leading-[1.35] mb-5">
+                나의 발표,<br />
+                이제 <span className="text-blue-600">데이터로 교정</span>하세요.
+              </h2>
+              <p className="text-[14px] text-gray-600 leading-[1.9]">
+                속도, 음정, 볼륨, 발음을 분석해주는 AI 발표 피드백 서비스<br />
+                객관적인 수치와 시·청각적 피드백으로, 발표 실력을<br />
+                한 단계 성장시켜보세요.
+              </p>
+            </div>
+            <div className="flex-1 h-[360px] rounded-2xl overflow-hidden">
+              <img src="/target-person.png" alt="발표 교정" className="w-full h-full object-cover" />
+            </div>
           </div>
         </section>
 
@@ -208,6 +239,7 @@ const Landing = () => {
               <p className="text-[12px] text-gray-500 leading-[1.7] text-center mb-auto">말하기 연습을 할 때마다 기록이 자동으로 저장되어<br />나의 변화까지 확인할 수 있어요.</p>
               <img src="/icon-notebook.png" alt="노트" className="w-[160px] h-[160px] object-contain mt-auto" style={{ animation: 'floatIllust 3s ease-in-out 1s infinite' }} />
             </div>
+
           </div>
         </section>
 
@@ -235,9 +267,9 @@ const Landing = () => {
                       data-fade={i % 2 === 0 ? 'right' : 'left'}
                       style={{ transitionDelay: '0.1s' }}
                     >
-                      <div className="w-full max-w-[340px] h-[210px] rounded-2xl bg-gray-200 shadow-[0_8px_24px_rgba(0,0,0,0.08)] overflow-hidden">
+                      <div className={`w-full max-w-[340px] rounded-2xl bg-gray-200 shadow-[0_8px_24px_rgba(0,0,0,0.08)] overflow-hidden ${'imgContain' in step && step.imgContain ? '' : 'h-[210px]'}`}>
                         {step.img && (
-                          <img src={step.img} alt={step.title} className="w-full h-full object-cover scale-[1.18]" />
+                          <img src={step.img} alt={step.title} className={`w-full ${'imgContain' in step && step.imgContain ? 'h-auto block' : 'h-full object-cover scale-[1.18]'}`} />
                         )}
                       </div>
                     </div>
@@ -271,7 +303,7 @@ const Landing = () => {
         {/* Section 7: Target Audience */}
         <section
           id="landing-target"
-          className="bg-[#F2F5F8] py-24"
+          className="bg-[#F2F5F8] py-36"
         >
           <div className="max-w-[960px] mx-auto px-8 flex items-center gap-16">
             <div className="flex-1">
@@ -292,15 +324,16 @@ const Landing = () => {
               </ul>
             </div>
 
-            {/* Person photo placeholder */}
-            <div className="flex-shrink-0 w-[380px] h-[420px] rounded-2xl bg-gray-300" />
+            <div className="flex-shrink-0 w-[380px] h-[420px] rounded-2xl bg-white flex items-center justify-center p-8">
+              <img src="/target-audience.png" alt="이런 분에게" className="w-full h-full object-contain" />
+            </div>
           </div>
         </section>
 
         {/* Section 8: CTA */}
         <section
           id="landing-cta"
-          className="relative overflow-hidden py-28 text-center"
+          className="relative overflow-hidden py-36 text-center"
         >
           {/* Presenter photo placeholder */}
           <div className="absolute inset-0 bg-gray-800" />
