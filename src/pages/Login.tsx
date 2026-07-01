@@ -11,12 +11,12 @@ function Login() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    const username = data.get('username') as string;
+    const id = data.get('id') as string;
     const password = data.get('password') as string;
 
     setLoading(true);
     setError(null);
-    const err = await login(username, password);
+    const err = await login(id, password);
     setLoading(false);
 
     if (err) {
@@ -34,7 +34,7 @@ function Login() {
         <form className="flex flex-col" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-3">
             <input
-              name="username"
+              name="id"
               className="w-full h-[52px] border-[1.5px] border-gray-300 rounded-[10px] px-4 text-[15px] bg-[#FAFBFC] text-[#1A1A2E] placeholder:text-gray-400 transition-all duration-150 focus:outline-none focus:border-blue-600 focus:shadow-[0_0_0_3px_rgba(37,99,235,0.1)]"
               type="text"
               placeholder="아이디"

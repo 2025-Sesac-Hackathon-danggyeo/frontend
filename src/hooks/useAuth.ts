@@ -7,11 +7,11 @@ export function useAuth() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const signUp = useCallback(async (username: string, password: string) => {
+  const signUp = useCallback(async (id: string, password: string) => {
     setLoading(true);
     setError(null);
     try {
-      const { token, user } = await authApi.signUp({ username, password });
+      const { token, user } = await authApi.signUp({ id, password });
       localStorage.setItem('token', token);
       setUser(user);
       return true;
@@ -23,11 +23,11 @@ export function useAuth() {
     }
   }, []);
 
-  const login = useCallback(async (username: string, password: string) => {
+  const login = useCallback(async (id: string, password: string) => {
     setLoading(true);
     setError(null);
     try {
-      const { token, user } = await authApi.login({ username, password });
+      const { token, user } = await authApi.login({ id, password });
       localStorage.setItem('token', token);
       setUser(user);
       return true;
